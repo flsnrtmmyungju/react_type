@@ -158,3 +158,70 @@ function App() {
   )
 }
 -->
+
+<!--* 추가 설치 + 리액트 라우터돔 5.3버전사용
+* npm i react-router-dom@5.3
+* npm i react-query@3.39.3
+* npm i --save-dev @types/react-router-dom
+-->
+
+react-query 설치 변경사항
+react-query 공식문서 참조
+npm i @tanstack/react-query --save --legacy-peer-deps
+import {} from '@tanstack/react-query'
+const { data, isLoading } = useQuery([“queryKey”], queryFunction);
+
+다크모드
+다크모드는 recoil과 ThemeProvider로 구현할 수 있습니다. 방식은 아래와 같습니다.
+theme.tsx에 dark/light 두 가지 theme 생성.
+ThemeProvider적용 및 GlobalStyle과 theme 연결.
+토글 버튼을 눌렀을 때, state가 변경.
+ThemeProvider의 theme 프로퍼티 내부에 삼항연산자를 이용해 state가 변할 때 다른 Theme이 적용되도록 설정.
+
+CandleStick
+Chart를 CandleStick으로 나타내기 위해선, data에 두 가지 인수(x,y)를 전달해줘야 합니다. x는 x축의 이름, y는 [open, high, low, close]가 순서대로 담긴 배열입니다.
+기존의 방식과는 달리 전달해야 할 데이터가 약간 복잡합니다. 그렇다면, 우리는 아래와 같이 외부에서 변수를 선언 및 가공한 후, 전달하는 것을 고려해보는 것이 좋습니다.
+
+- const exceptData = data ?? [];
+- const chartData = exceptData?.map((i)=>{
+- return {
+-      x: i.time_close,
+-      y: [i.open, i.high, i.low, i.close],
+- }
+- });
+  ApexChart-CandleStick 공식문서 참조-https://apexcharts.com/react-chart-demos/candlestick-charts/basic/
+  ApexChart의 공식 Docs DB가 자주 날아갑니다.
+  ex// class ApexChart extends React.Component {
+  constructor(props) {
+  super(props);
+
+            this.state = {
+
+              series: [{
+                data: [{
+                    x: new Date(1538778600000),
+                    y: [6629.81, 6650.5, 6623.04, 6633.33]
+                  },
+                  {
+                    x: new Date(1538780400000),
+                    y: [6632.01, 6643.59, 6620, 6630.11]
+                  },
+                  {
+                    x: new Date(1538782200000),
+                    y: [6630.71, 6648.95, 6623.34, 6635.65]
+                  },
+
+
+이외의 팁
+Coin탭은 Chart와 Price를 render하기 위해 중첩 라우팅을 사용해야 합니다. 중첩 라우팅에는 두 가지 방식이 있습니다.
+
+V6 Descendant Routes(강의Ver) Descendant Routes 공식문서 참조
+V6 Nested Route Nested Route 공식문서 참조
+
+V5로 구현할 경우, Routes를 Switch로 바꿔주신 뒤, 각 Route 컴포넌트에 렌더링을 할 컴포넌트를 넣어주시면 됩니다.
+React에서 Home과 같은 특정 페이지로 이동해야 할 때, <a>를 사용하는 건 좋은 방법이 아닙니다. <Link />를 사용해봅시다!-<Link> 공식문서 참조
+
+Coin의 데이터를 fetch 할 땐, react-query를 사용합니다. queryFunction 자리에는 fetch를 사용하는 promise 함수가 들어갑니다.
+react-query 공식문서 참조
+
+ApexChart - CandleStick Chart
