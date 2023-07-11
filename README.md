@@ -118,7 +118,7 @@ const priceMatch = useRouteMatch("/:coinId/price");
 </Tabs>
 -->
 
-<!-- ^ useQuery(react-query다운받아야함.데이터를 캐시에 저장,패처등등 사용하기편함) 사용법
+<!-- ^ useQuery(react-query다운받아야함.responce를 캐싱,패처등등 사용하기편함) 사용법
 import { QueryClient, QueryClientProvider } from "react-query";
 const queryClient = new QueryClient();
   <React.StrictMode>
@@ -137,11 +137,23 @@ export function fetchCoins() {
   );
 }
 이후 필요한 곳에 가서
-
-                            !useQuery(        유니크 쿼리키,fetch함수)
+                            !useQuery(유니크 쿼리키(무조건달라야함),fetch함수)
 const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
-
+    <!--!여기도 같은이름이면안되서 바꿈
+const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
+    <!-- !유니크쿼리키라서 무조건달라야하니까 이렇게 ["info",conid] 사용
+        ["info", coinId],() => fetchCoinInfo(coinId));
+const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
+        ["tickers", coinId],() => fetchCoinTickers(coinId));
 -->
+
+<!--^ react-query/devtools(화면아래에 내 캐시에있는 쿼리정보들 볼수있는 프로그램 뜸)사용법
+App.tsx
+import { ReactQueryDevtools } from "react-query/devtools";
+
+<Router />
+<ReactQueryDevtools initialIsOpen={true} />
+ -->
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
