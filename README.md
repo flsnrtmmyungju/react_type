@@ -1,7 +1,14 @@
 <!--* 추가 설치 + 리액트 라우터돔 5.3버전사용
 * npm i react-router-dom@5.3
 * npm i react-query@3.39.3
-* npm i --save-dev @types/react-router-dom
+* npm i @types/react-router-dom
+* npm i apexcharts@3.41.0
+* npm i react-apexcharts@1.4.0
+* gh-pages
+* react-helmet-async
+* react-helmet
+* @types/react-helmet
+
 -->
 
 <!-- ^ 스타일컴포넌트 사용법
@@ -119,6 +126,14 @@ const priceMatch = useRouteMatch("/:coinId/price");
 -->
 
 <!-- ^ useQuery(react-query다운받아야함.responce를 캐싱,패처등등 사용하기편함) 사용법
+!useQuery(유니크 쿼리키(무조건달라야함),fetch함수,선택적함수)
+ex//useQuery<IHistorical[]>(
+  ["ohlcv", coinId], //유니크 쿼리키
+  () => fetchCoinHistory(coinId), //fetch함수
+  {refetchInterval: 10000,} //선택적함수
+ );
+
+
 import { QueryClient, QueryClientProvider } from "react-query";
 const queryClient = new QueryClient();
   <React.StrictMode>
@@ -270,6 +285,9 @@ Chart를 CandleStick으로 나타내기 위해선, data에 두 가지 인수(x,y
   Coin의 데이터를 fetch 할 땐, react-query를 사용합니다. queryFunction 자리에는 fetch를 사용하는 promise 함수가 들어갑니다.
   react-query 공식문서 참조
   ApexChart - CandleStick Chart
+
+22년 5월17일자까지 잘 동작하는 4.15까지 완성된 github 소스
+https://github.com/skyiwalker/nomad-coders-reactmaster-crypto-tracker/commit/9da0a2cc3c8819cc3b98a283ad24ac71fb51c30a
 
 <!--*팁
 ()()이렇게하면 함수 바로실행
