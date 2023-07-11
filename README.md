@@ -1,3 +1,9 @@
+<!--* 추가 설치 + 리액트 라우터돔 5.3버전사용
+* npm i react-router-dom@5.3
+* npm i react-query@3.39.3
+* npm i --save-dev @types/react-router-dom
+-->
+
 <!-- ^ 스타일컴포넌트 사용법
 *프롭받는 예시
 & const Box = styled.div`background-color: ${(props)=>props.bgColor};`;
@@ -112,6 +118,31 @@ const priceMatch = useRouteMatch("/:coinId/price");
 </Tabs>
 -->
 
+<!-- ^ useQuery(react-query다운받아야함.데이터를 캐시에 저장,패처등등 사용하기편함) 사용법
+import { QueryClient, QueryClientProvider } from "react-query";
+const queryClient = new QueryClient();
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </QueryClientProvider>
+  </React.StrictMode>
+
+이이후에 api.tsx만들어서
+fetch할걸 넣음
+export function fetchCoins() {
+    return fetch("https://api.coinpaprika.com/v1/coins").then((response) =>
+      response.json()
+  );
+}
+이후 필요한 곳에 가서
+
+                            !useQuery(        유니크 쿼리키,fetch함수)
+const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+
+-->
+
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
 <!-- ^ es문법 사용법
@@ -185,12 +216,6 @@ function App() {
     </Container>
   )
 }
--->
-
-<!--* 추가 설치 + 리액트 라우터돔 5.3버전사용
-* npm i react-router-dom@5.3
-* npm i react-query@3.39.3
-* npm i --save-dev @types/react-router-dom
 -->
 
 react-query 설치 변경사항
