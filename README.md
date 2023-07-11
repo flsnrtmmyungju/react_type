@@ -80,11 +80,39 @@ function Circle({ bgColor, borderColor, text = "default text" }: CircleProps) {
 }
 -->
 
-<!-- ^ state 사용법
+<!-- ^ 아래는 리액트 훅
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+<!-- ^ useState 사용법 (변수,변수실행시킬 함수 생성및설정)
 &기본 useState 사용법
 *          변수,   변수실행시킬 함수       1로 디폴트스테이트설정,타입설정(안해도됨혹시 두타입사용하고싶을경우.)
 *  const [counter, setCounter] = useState<string||number>(1)
 -->
+
+<!--^ useEffect 사용법 (컴포넌트가 생성될때 한번 실행하게 함)
+기본틀
+  useEffect(()=>{내용},[])//컨포넌트의 시작에서만 쓰려면[] 이렇게 비워야함 안에 뭐를 넣으면 안에넣은게바뀌면 훅이다시실행
+//ex
+  useEffect(()=>{
+    (async()=>{ //()()이렇게하면 함수 바로실행
+      const response = await fetch("https://api.coinpaprika.com/v1/coins");
+      const json = await response.json();
+      setCoins(json.slice(0,100))
+      setLoading(false)
+    })();
+  },[])
+-->
+
+<!--^ useRouteMatch 사용법 (맞는 라우터에 있는걸 확인해줌 *주소의 여러정보들어있음)
+const priceMatch = useRouteMatch("/:coinId/price");
+<Tabs>
+  <Tab isActive={priceMatch !== null}> //isActive는 임의의이름임 다른이름가능
+    <Link to={`/${coinId}/price`}>Price</Link>
+  </Tab>
+</Tabs>
+-->
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
 <!-- ^ es문법 사용법
 * const {currentTarget: { value },} = event;문법 설명
@@ -173,10 +201,6 @@ const { data, isLoading } = useQuery([“queryKey”], queryFunction);
 
 다크모드
 다크모드는 recoil과 ThemeProvider로 구현할 수 있습니다. 방식은 아래와 같습니다.
-theme.tsx에 dark/light 두 가지 theme 생성.
-ThemeProvider적용 및 GlobalStyle과 theme 연결.
-토글 버튼을 눌렀을 때, state가 변경.
-ThemeProvider의 theme 프로퍼티 내부에 삼항연산자를 이용해 state가 변할 때 다른 Theme이 적용되도록 설정.
 
 CandleStick
 Chart를 CandleStick으로 나타내기 위해선, data에 두 가지 인수(x,y)를 전달해줘야 합니다. x는 x축의 이름, y는 [open, high, low, close]가 순서대로 담긴 배열입니다.
@@ -194,34 +218,26 @@ Chart를 CandleStick으로 나타내기 위해선, data에 두 가지 인수(x,y
   ex// class ApexChart extends React.Component {
   constructor(props) {
   super(props);
+  this.state = {
+  series: [{
+  data: [{
+  x: new Date(1538778600000),
+  y: [6629.81, 6650.5, 6623.04, 6633.33]
+  },
+  이외의 팁
+  Coin탭은 Chart와 Price를 render하기 위해 중첩 라우팅을 사용해야 합니다. 중첩 라우팅에는 두 가지 방식이 있습니다.
+  V6 Descendant Routes(강의Ver) Descendant Routes 공식문서 참조
+  V6 Nested Route Nested Route 공식문서 참조
+  V5로 구현할 경우, Routes를 Switch로 바꿔주신 뒤, 각 Route 컴포넌트에 렌더링을 할 컴포넌트를 넣어주시면 됩니다.
+  React에서 Home과 같은 특정 페이지로 이동해야 할 때, <a>를 사용하는 건 좋은 방법이 아닙니다. <Link />를 사용해봅시다!-<Link> 공식문서 참조
+  Coin의 데이터를 fetch 할 땐, react-query를 사용합니다. queryFunction 자리에는 fetch를 사용하는 promise 함수가 들어갑니다.
+  react-query 공식문서 참조
+  ApexChart - CandleStick Chart
 
-            this.state = {
+<!--*팁
+()()이렇게하면 함수 바로실행
 
-              series: [{
-                data: [{
-                    x: new Date(1538778600000),
-                    y: [6629.81, 6650.5, 6623.04, 6633.33]
-                  },
-                  {
-                    x: new Date(1538780400000),
-                    y: [6632.01, 6643.59, 6620, 6630.11]
-                  },
-                  {
-                    x: new Date(1538782200000),
-                    y: [6630.71, 6648.95, 6623.34, 6635.65]
-                  },
+exdata.data 이렇게하면 exdata가없거나 undefined면 에러
+exdata?.data 이렇게하면 있을때만 실행
 
-
-이외의 팁
-Coin탭은 Chart와 Price를 render하기 위해 중첩 라우팅을 사용해야 합니다. 중첩 라우팅에는 두 가지 방식이 있습니다.
-
-V6 Descendant Routes(강의Ver) Descendant Routes 공식문서 참조
-V6 Nested Route Nested Route 공식문서 참조
-
-V5로 구현할 경우, Routes를 Switch로 바꿔주신 뒤, 각 Route 컴포넌트에 렌더링을 할 컴포넌트를 넣어주시면 됩니다.
-React에서 Home과 같은 특정 페이지로 이동해야 할 때, <a>를 사용하는 건 좋은 방법이 아닙니다. <Link />를 사용해봅시다!-<Link> 공식문서 참조
-
-Coin의 데이터를 fetch 할 땐, react-query를 사용합니다. queryFunction 자리에는 fetch를 사용하는 promise 함수가 들어갑니다.
-react-query 공식문서 참조
-
-ApexChart - CandleStick Chart
+-->
