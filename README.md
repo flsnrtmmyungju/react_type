@@ -4,10 +4,9 @@
 * npm i @types/react-router-dom
 * npm i apexcharts@3.41.0
 * npm i react-apexcharts@1.4.0
-* gh-pages
-* react-helmet-async
-* react-helmet
-* @types/react-helmet
+* gh-pages//없어도됨
+* react-helmet-async react-helmet @types/react-helmet
+* recoil
 
 -->
 
@@ -172,6 +171,52 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
+<!-- ^ 아래는 리액트 상태관리 Recoil 사용하는법
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+<!-- ^ recoil 기본 설치법
+인덱스에서
+import { RecoilRoot } from 'recoil';
+<RecoilRoot>
+  <QueryClientProvider client={queryClient}>
+      <App />
+  </QueryClientProvider>
+</RecoilRoot>
+이렇게 감쌈
+
+atoms.ts 만들어서
+import { atom } from "recoil";
+
+필요한거 만듬.
+ex.// key,default는 꼭있어야함 key는 당연히 유니크키
+export const isDarkAtom = atom({
+    key:"isDark",
+    default:"false"
+})
+
+-->
+
+<!-- ^ useRecoilValue(리코일 벨류 가져오는거) 사용법
+필요한곳 가서 import는 자동...
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "./atoms";
+
+const isDark = useRecoilValue(isDarkAtom)
+
+<ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+ -->
+
+<!-- ^ useSetRecoilState(리코일 벨류 수정할수있는거) 사용법
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
+
+const setDarkAtom = useSetRecoilState(isDarkAtom)
+const toggleDarkAtom = ()=> setDarkAtom(prev=> !prev);
+
+<button onClick={toggleDarkAtom}>다크모드</button>
+-->
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
 <!-- ^ es문법 사용법
 * const {currentTarget: { value },} = event;문법 설명
 
@@ -243,6 +288,28 @@ function App() {
     </Container>
   )
 }
+-->
+
+<!-- ^ helmet(탭이름,이모티콘등등사용가능)사용법
+* react-helmet-async
+* react-helmet
+* @types/react-helmet
+깔고
+app.tsx 에
+import { HelmetProvider } from "react-helmet-async";
+라우터를 감쌈
+<HelmetProvider>
+  < Router />
+</HelmetProvider>
+
+그리고 원하는곳에가서
+import { Helmet } from "react-helmet-async";
+<Helmet>
+  <title>
+    {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+  </title>
+</Helmet>
+이런식으로 원하는거 적음
 -->
 
 react-query 설치 변경사항
