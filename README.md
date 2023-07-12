@@ -323,11 +323,31 @@ import { Helmet } from "react-helmet-async";
 <!-- ^ react-hook-form(form의여러가지기능들어있음)사용법
 import { useForm } from "react-hook-form";
 
-     !register:onchange,onblur등등의 이벤트가 다생성됨. watch:form입력값 받아옴
-const {register, watch}= useForm();
-       !register함수가 반환하는 객체를 input에 props로 전달
-<input {...register("Email")} placeholder="Email" />
-
+!register:onchange,onblur등등의 이벤트가 다생성됨.
+&           required, minLength 등등..
+&           오류를 바로 메세지와함께보내는방법
+&           required: "required mag"
+&           minLength:{value:5, message:"required mag"}
+!watch:form입력값 받아옴
+!handleSubmit: Submit한 데이터 다가져옴
+const {register, watch, handleSubmit}= useForm();
+  const onValid=(data:any)=>{
+    console.log('data',data)
+  }
+        !handleSubmit 사용
+  <form onSubmit={handleSubmit(onValid)}>
+            !register사용 //register함수가 반환하는 객체를 input에 props로 전달
+                              ! {required:true} 레지스터 안에 넣어서쓰는이유는
+                             !  required직접 태그에넣으면 브라우저에서 수정가능
+                             !그리고 자동으로 비어있는곳으로 이동
+    <input {...register("email", {required:true})} placeholder="Email" />
+    <input {...register("firstName")} placeholder="First Name" />
+    <input {...register("lastName")} placeholder="Last Name" />
+    <input {...register("username")} placeholder="Username" />
+    <input {...register("password")} placeholder="Password" />
+    <input {...register("password1")} placeholder="Password1" />
+    <button>Add</button>
+  </form>
 -->
 
 react-query 설치 변경사항
