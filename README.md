@@ -7,7 +7,7 @@
 * gh-pages//없어도됨
 * react-helmet-async react-helmet @types/react-helmet
 * recoil
-
+* react-hook-form
 -->
 
 <!-- ^ 스타일컴포넌트 사용법
@@ -50,6 +50,14 @@ npm i styled-components --legacy-peer-deps --save
 npm i --save-dev @types/styled-components
 & index.tsx의 const root = ReactDOM.createRoot(document.getElementById('root')); 부분 아래처럼변경
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+
+*글로벌스타일적용 (@import 사용하려면.)5.xx업데이트이후..
+&밑에 적힌대로 헬맷 설치하고
+import { Helmet } from "react-helmet-async";
+
+<HelmetProvider>
+      <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet"/>
+</HelmetProvider>
 -->
 
 <!-- ^ 타입스크립트 사용법
@@ -217,7 +225,7 @@ const toggleDarkAtom = ()=> setDarkAtom(prev=> !prev);
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
-<!-- ^ es문법 사용법
+<!-- ^ es6문법 destructuring 사용법
 * const {currentTarget: { value },} = event;문법 설명
 
 * ES6 event안 curentTarget안에 value의 값을 기존 이름 그대로 value 라는 변수를 만듬.
@@ -310,6 +318,16 @@ import { Helmet } from "react-helmet-async";
   </title>
 </Helmet>
 이런식으로 원하는거 적음
+-->
+
+<!-- ^ react-hook-form(form의여러가지기능들어있음)사용법
+import { useForm } from "react-hook-form";
+
+     !register:onchange,onblur등등의 이벤트가 다생성됨. watch:form입력값 받아옴
+const {register, watch}= useForm();
+       !register함수가 반환하는 객체를 input에 props로 전달
+<input {...register("Email")} placeholder="Email" />
+
 -->
 
 react-query 설치 변경사항
