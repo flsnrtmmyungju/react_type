@@ -284,6 +284,36 @@ const setDarkAtom = useSetRecoilState(isDarkAtom)
 const toggleDarkAtom = ()=> setDarkAtom(prev=> !prev);
 
 <button onClick={toggleDarkAtom}>다크모드</button>
+
+
+사용법2
+import { useSetRecoilState } from "recoil";
+import { IToDo, toDoState } from "../atoms";
+  !toDoState라는 atoms에서 가져온 걸 담아서
+ const setToDos = useSetRecoilState(toDoState);
+  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    !!아래와 같음 const event.currentTarget.name
+    const {
+      currentTarget: { name },
+    } = event;
+    !버튼클릭시에 카테고리 이름 바꾸는거
+    setToDos(oldToDos =>{
+      const tagetIndex = oldToDos.findIndex(toDo =>toDo.id=== id )
+      const oldToDo = oldToDos[tagetIndex]
+      const newToDo = {text,id, category:name as any}
+      return [...oldToDos.slice(0,tagetIndex),newToDo,...oldToDos.slice(tagetIndex+1)]
+    })
+  };
+    return (
+    <li>
+      <span>{text}</span>
+      {category !== "DOING" && (
+        <button name="DOING" onClick={onClick}>
+          Doing
+        </button>
+      )} 
+    </li>
+  );
 -->
 
 <!-- ^ useRecoilState(리코일 벨류 가져오고 수정 한번에할수있음) 사용법
@@ -295,6 +325,74 @@ const toggleDarkAtom = ()=> setDarkAtom(prev=> !prev);
       ...oldToDos,
   ]);
 -->
+
+<!-- ^ selector(atom(어레이라고 생각)의 output을 변형시키는 도구)
+*key, get을 가져야한다. {get}은 get사용하는 방법
+
+* atoms.tsx에서
+import { atom, selector } from "recoil";
+export interface IToDo {
+  text: string;
+  id: number;
+  category: "TO_DO" | "DOING" | "DONE";
+}
+export const toDoState = atom<IToDo[]>({
+  key: "toDo",
+  default: [],
+});
+
+export const toDoSelector= selector({
+  key: "toDoSelector",
+       !
+  get: ({get})=>{
+              !get을 이용해서 위의 state를 가져옴
+    const toDos = get(toDoState)
+    return [
+    toDos.filter(toDo=>toDo.category ==="TO_DO"),
+    toDos.filter(toDo=>toDo.category ==="DOING"),
+    toDos.filter(toDo=>toDo.category ==="DONE")
+    ];
+  },
+});
+* 사용할파일 tsx에서
+import { toDoSelector } from "../atoms";
+
+function ToDoList() {
+     !위 toDoSelector selector 에서 정해놓은 순서대로이름정해야함
+  const [toDo, doing, done] = useRecoilValue(toDoSelector);
+  return (
+    <div>
+      <h1>To Dos</h1>
+      <hr />
+      <CreateToDo />
+      <h1>To Dos</h1>
+      <ul>
+        {toDo.map((toDo) => (
+           !<ToDo text={toDO.text} category={todo.category} 이런식으로 긴코드가
+           !props 타입이 같고 값이 정해져 있으니까 {...toDo}이런식으로 한번에 사용가능
+          <ToDo key={toDo.id} {...toDo} />
+        ))}
+      </ul>
+      <hr />
+      <h1>Doing</h1>
+      <ul>
+        {doing.map((toDo) => (
+          <ToDo key={toDo.id} {...toDo} />
+        ))}
+      </ul>
+      <hr />
+      <h1>Done</h1>
+      <ul>
+        {done.map((toDo) => (
+          <ToDo key={toDo.id} {...toDo} />
+        ))}
+      </ul>
+      <hr />
+    </div>
+  );
+}
+ -->
+
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
