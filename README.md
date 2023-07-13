@@ -342,8 +342,19 @@ watch ex//const inputValue = watch('inputFieldName');
           <input name="inputFieldName" ref={register} />
           <p>입력 값: {inputValue}</p>
 
-!handleSubmit: Submit한 데이터 다가져옴   !formState로 에러내용확인가능
-const {register, watch, handleSubmit,formState:{errors},setError}= useForm<IForm>({
+      !register함수가 반환하는 객체를 input에 props로 전달
+const {register,
+      !form입력값 받아옴
+       watch,
+       !Submit한 데이터 다가져옴
+       handleSubmit
+       !에러내용확인가능
+       ,formState:{errors},
+       !조건만들어서 에러만들수있음
+       setError
+       !value를바꿀수있음
+       ,setValue
+       }= useForm<IForm>({
     !기본적인 데이터를 미리셋팅가능
     defaultValues: {email: "@naver.com",},
   });
@@ -356,6 +367,9 @@ const {register, watch, handleSubmit,formState:{errors},setError}= useForm<IForm
         { shouldFocus: true }
       );
     }
+    !이런식으로 value 바꿔서 비울수도 있음
+    setValue("password", "");
+
   };
   console.error(errors);
 
