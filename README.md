@@ -62,6 +62,11 @@ import { Helmet } from "react-helmet-async";
 
 <!-- ^ 타입스크립트 사용법
 &기본적인 사용법예시
+* 순서
+interface 생성
+호출 - interface안에서 한개만호출 - Circle({ bgColor }: CircleProps)
+     - interface 전체 호출 - Circle<CircleProps>()
+
 * app.tsx에서
 import Circle from "./Circle";
 <Circle bgColor="teal" />
@@ -81,7 +86,7 @@ const Container = styled.div<CircleProps>`
   background-color: ${(props) => props.bgColor};
   border-radius: 100px;
 `;
-                            &형식지정
+                    &bgColor이라는 한개만 쓰니까 이런식으로 형식지정 전부필요하면 <CircleProps>
 function Circle({ bgColor }: CircleProps) {
   return <Container bgColor={bgColor} />;
 }
@@ -98,6 +103,58 @@ function Circle({ bgColor, borderColor, text = "default text" }: CircleProps) {
     </Container>
   );
 }
+
+&인터페이스와 타입지정
+interface IToDo {
+  text: string;
+  id: number;
+  category: "TO_DO" | "DOING" | "DONE";
+}
+
+const toDoState = atom<IToDo[]>({
+  key: "toDo",
+  default: [],
+});
+* <IToDo[]>와 <IToDo> 차이점
+<IToDo[]>: 배열 타입 지정
+<IToDo[]>는 IToDo라는 인터페이스를 요소로 갖는 배열 타입을 나타냅니다.
+즉, toDoState는 IToDo 인터페이스를 요소로 가지는 배열을 상태로 가질 것이라는 의미입니다.
+이는 여러 개의 할 일 항목을 담을 수 있는 배열을 의도한 것입니다.
+
+<IToDo>: 단일 객체 타입 지정
+<IToDo>는 IToDo라는 인터페이스를 가진 단일 객체 타입을 나타냅니다.
+즉, toDoState는 IToDo 인터페이스에 정의된 속성들을 가진 단일 객체를 상태로 가질 것이라는 의미입니다.
+이는 단일 할 일 항목을 담을 수 있는 객체를 의도한 것입니다.
+
+따라서 <IToDo[]>는 여러 개의 할 일 항목을 담는 배열을 상태로 가지고,
+<IToDo>는 단일 할 일 항목을 담는 객체를 상태로 가진다는 차이가 있습니다.
+이에 따라 코드를 사용하는 곳에서도 배열 형태로 사용하거나 단일 객체 형태로 사용해야 합니다.
+
+*형식이 같을경우 간단한게 쓰는 방법
+import { useRecoilValue } from "recoil";
+import { toDoState } from "../atoms";
+import CreateToDo from "./CreateToDo";
+import ToDo from "./ToDo";
+
+function ToDoList() {
+  const toDos = useRecoilValue(toDoState);
+  return (
+    <div>
+      <h1>To Dos</h1>
+      <hr />
+      <CreateToDo />
+      <ul>
+        {toDos.map((toDo) => (
+              ! <ToDo text={toDO.text} category={todo.category} 이런식으로 긴코드가
+              ! props 타입이 같고 값이 정해져 있으니까 {...toDo}이런식으로 한번에 사용가능
+          <ToDo key={toDo.id} {...toDo} />
+        ))}
+      </ul>
+      </div>
+  );
+}
+export default ToDoList;
+
 -->
 
 <!-- ^ 아래는 리액트 훅
@@ -221,6 +278,16 @@ const setDarkAtom = useSetRecoilState(isDarkAtom)
 const toggleDarkAtom = ()=> setDarkAtom(prev=> !prev);
 
 <button onClick={toggleDarkAtom}>다크모드</button>
+-->
+
+<!-- ^ useRecoilState(리코일 벨류 가져오고 수정 한번에할수있음) 사용법
+  리엑트 useState 와 사용법이 같다.
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  setToDos((oldToDos) => [
+      { text: toDo, id: Date.now(), category: "TO_DO" },
+      ![oldToDos]이렇게하면 [[valu들]], ...oldToDos이렇게하면 [valu들]
+      ...oldToDos,
+  ]);
 -->
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
