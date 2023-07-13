@@ -1,39 +1,29 @@
-import { useRecoilValue } from "recoil";
-import { toDoState ,toDoSelector } from "../atoms";
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { categoryState, toDoSelector } from "../atoms";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 
 function ToDoList() {
-  const [toDo, doing, done] = useRecoilValue(toDoSelector);//받은순서대로이름정해야함
+  const toDos = useRecoilValue(toDoSelector);
+  const [category, setCategory] = useRecoilState(categoryState);
+  const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
+    setCategory(event.currentTarget.value);
+  };
   return (
-    <div>
+    <>
       <h1>To Dos</h1>
       <hr />
+      <select value={category} onInput={onInput}>
+        <option value="TO_DO">To Do</option>
+        <option value="DOING">Doing</option>
+        <option value="DONE">Done</option>
+      </select>
       <CreateToDo />
-      <h1>To Dos</h1>
-      <ul>
-        {toDo.map((toDo) => (
-           //<ToDo text={toDO.text} category={todo.category} 이런식으로 긴코드가
-           //props 타입이 같고 값이 정해져 있으니까 {...toDo}이런식으로 한번에 사용가능
-          <ToDo key={toDo.id} {...toDo} />
-        ))}
-      </ul>
-      <hr />
-      <h1>Doing</h1>
-      <ul>
-        {doing.map((toDo) => (
-          <ToDo key={toDo.id} {...toDo} />
-        ))}
-      </ul>
-      <hr />
-      <h1>Done</h1>
-      <ul>
-        {done.map((toDo) => (
-          <ToDo key={toDo.id} {...toDo} />
-        ))}
-      </ul>
-      <hr />
-    </div>
+      {toDos?.map((toDo) => (
+        <ToDo key={toDo.id} {...toDo} />
+      ))}
+    </>
   );
 }
 export default ToDoList;

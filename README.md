@@ -331,30 +331,33 @@ import { IToDo, toDoState } from "../atoms";
 
 * atoms.tsx에서
 import { atom, selector } from "recoil";
+
 export interface IToDo {
   text: string;
   id: number;
   category: "TO_DO" | "DOING" | "DONE";
 }
+
+export const categoryState = atom({
+  key: "category",
+  default: "TO_DO",
+});
+
 export const toDoState = atom<IToDo[]>({
   key: "toDo",
   default: [],
 });
 
-export const toDoSelector= selector({
+export const toDoSelector = selector({
   key: "toDoSelector",
-       !
-  get: ({get})=>{
-              !get을 이용해서 위의 state를 가져옴
-    const toDos = get(toDoState)
-    return [
-    toDos.filter(toDo=>toDo.category ==="TO_DO"),
-    toDos.filter(toDo=>toDo.category ==="DOING"),
-    toDos.filter(toDo=>toDo.category ==="DONE")
-    ];
+  get: ({ get }) => {
+                 !get을 이용해서 위의 state를 가져옴
+    const toDos = get(toDoState);
+    const category = get(categoryState);
+    return toDos.filter((toDo) => toDo.category === category);
   },
 });
-* 사용할파일 tsx에서
+* 사용할파일 tsx에서 ---1
 import { toDoSelector } from "../atoms";
 
 function ToDoList() {
@@ -389,6 +392,29 @@ function ToDoList() {
       </ul>
       <hr />
     </div>
+  );
+}
+* 사용할파일 tsx에서 ---2
+function ToDoList() {
+  const toDos = useRecoilValue(toDoSelector);
+  const [category, setCategory] = useRecoilState(categoryState);
+  const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
+    setCategory(event.currentTarget.value);
+  };
+  return (
+    <>
+      <h1>To Dos</h1>
+      <hr />
+      <select value={category} onInput={onInput}>
+        <option value="TO_DO">To Do</option>
+        <option value="DOING">Doing</option>
+        <option value="DONE">Done</option>
+      </select>
+      <CreateToDo />
+      {toDos?.map((toDo) => (
+        <ToDo key={toDo.id} {...toDo} />
+      ))}
+    </>
   );
 }
  -->
