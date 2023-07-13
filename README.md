@@ -554,4 +554,13 @@ console.log('callback2', callback2) //결과 : callback2 () => getcategory('call
 someFunction(callback2);// 콜백 함수로 사용하여 someFunction 호출 
                          //결과 : someFunctionsomeFunction callbackdone
 -->
+
+<!--* slice와 ... 이용하여 원소위치바꾸지않고 어레이 바꾸는방법
+ setToDos(oldToDos =>{
+      const tagetIndex = oldToDos.findIndex(toDo =>toDo.id=== id )
+      const oldToDo = oldToDos[tagetIndex]
+      const newToDo = {text,id, category:name as any}
+      return [...oldToDos.slice(0,tagetIndex),newToDo,...oldToDos.slice(tagetIndex+1)]
+})
+-->
 -->
