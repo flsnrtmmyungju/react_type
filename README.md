@@ -155,6 +155,12 @@ function ToDoList() {
 }
 export default ToDoList;
 
+!!위의 다른 예
+const onClick= (newCategory : "a" | "b" | "c" )
+위와 같음 (IToDO인터페이스에 category의 이름이 a,b,c라는 같은이름이 있을때 가능 )
+const onClick= (newCategory : IToDO["category"] )
+
+
 -->
 
 <!-- ^ 아래는 리액트 훅
@@ -525,5 +531,27 @@ https://github.com/skyiwalker/nomad-coders-reactmaster-crypto-tracker/commit/9da
 
 exdata.data 이렇게하면 exdata가없거나 undefined면 에러
 exdata?.data 이렇게하면 있을때만 실행
+한단계 더 도 가능 exdata?.data?.name 
 
+
+<!--*함수바로 변수에 할당 사용과 콜백으로 사용방법차이  
+const getcategory = (value:any) => {
+  return value+"done"
+}
+const someFunction = (value:any) => {
+                                        <!--!함수를 반환시키려면 value() 중요!! -->
+  console.log('someFunctionsomeFunction',value())
+}
+
+// getcategory(value) - 함수 호출
+const result2 = getcategory('result'); // 함수 호출하여 반환값을 result 변수에 할당
+console.log('result2', result2) //결과 : result2 resultdone
+
+  
+// () => getcategory(value) - 함수 반환
+const callback2 = () => getcategory('callback');// 콜백 함수로 사용하기 위해 함수 자체를 반환
+console.log('callback2', callback2) //결과 : callback2 () => getcategory('callback')
+someFunction(callback2);// 콜백 함수로 사용하여 someFunction 호출 
+                         //결과 : someFunctionsomeFunction callbackdone
+-->
 -->
