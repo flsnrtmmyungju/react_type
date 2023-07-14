@@ -1,11 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { RecoilRoot } from 'recoil';
-import App from './App';
 import { createGlobalStyle } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
-import { ThemeProvider } from 'styled-components';
-import { darkTheme } from './theme';
+
+import ToDoList from "./components/ToDoList";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -74,18 +70,18 @@ a {
 }
 `;
 
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-root.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <ThemeProvider theme={darkTheme}>
-          <HelmetProvider>
-             <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet"/>
-          </HelmetProvider>
-          <GlobalStyle />
-          <App />
-      </ThemeProvider>
-    </RecoilRoot>
-  </React.StrictMode>
-);
+function App() {      
+  return (
+    <> 
+      <HelmetProvider>
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet"/>
+      </HelmetProvider>
+      <GlobalStyle />     
+      <ToDoList />
+    </>
+  );
+}
+
+export default App;
+
 
