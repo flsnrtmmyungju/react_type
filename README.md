@@ -8,10 +8,10 @@
 
 <!-- * 추가 설치 + 리액트 라우터돔 5.3버전사용
 
-* npm i react-router-dom@5.3
+* npm i react-router-dom
 * npm i @types/react-router-dom
 
-* npm i react-query@3.39.3
+* npm i react-query
   ? react-query 설치 변경사항 아직적용은안함
   ! react-query 공식문서 참조
   ! npm i @tanstack/react-query --save --legacy-peer-deps
@@ -19,8 +19,8 @@
   ! const { data, isLoading } = useQuery([“queryKey”], queryFunction);
 
 !차트라이브러리
-* npm i apexcharts@3.41.0
-* npm i react-apexcharts@1.4.0
+* npm i apexcharts
+* npm i react-apexcharts
 
 * gh-pages//없어도됨
 
@@ -239,6 +239,7 @@ const playerDirection = Direction.Up;
 ! Droppable : 무언가를 드래그 앤 드롭 할수있는 영역 ex/리스트1,2
 ! Draggable : Droppable 안에서 드래그 하는 영역  ex/리스트안의 컴포넌트 1,2,3,4,5....
 *기본 셋팅
+!기본셋팅이라 움직이긴하는데 움직이고나서 제자리로 돌아감
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 const Wrapper = styled.div`
