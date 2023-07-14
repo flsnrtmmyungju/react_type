@@ -163,6 +163,7 @@ const onClick= (newCategory : IToDO["category"] )
 
 <!-- ^ Enum 사용법!
  *정의 열거형(enumeration)이라고도 불리며, 명명된 상수 그룹을 정의하는 데 사용됩니다.
+ * 기본적으로는 숫자로 생성됨 {"a","b","c"} 이면 실제로 데이터가져가서 사용하면 0,1,2
  javascript에서는 
  const Direction = {
   Up: 'UP',
@@ -366,7 +367,7 @@ import { IToDo, toDoState } from "../atoms";
 -->
 
 <!-- ^ selector(atom(어레이라고 생각)의 output을 변형시키는 도구)
-*key, get을 가져야한다. {get}은 get사용하는 방법
+*key은 필수, get or set 가져야한다. {get}은 get사용하는 방법
 
 * atoms.tsx에서
 import { atom, selector } from "recoil";
