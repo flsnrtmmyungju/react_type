@@ -239,37 +239,70 @@ const playerDirection = Direction.Up;
 ! Droppable : 무언가를 드래그 앤 드롭 할수있는 영역 ex/리스트1,2
 ! Draggable : Droppable 안에서 드래그 하는 영역  ex/리스트안의 컴포넌트 1,2,3,4,5....
 *기본 셋팅
-import React from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
+import styled from "styled-components";
+const Wrapper = styled.div`
+  display: flex;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+const Boards = styled.div`
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(1, 1fr);
+`;
+const Board = styled.div`
+  padding: 20px 10px;
+  padding-top: 30px;
+  background-color: ${(props) => props.theme.boardColor};
+  border-radius: 5px;
+  min-height: 200px;
+`;
+const Card = styled.div`
+  border-radius: 5px;
+  margin-bottom: 5px;
+  padding: 10px 10px;
+  background-color: ${(props) => props.theme.cardColor};
+`;
+const toDos = ["a", "b", "c", "d", "e", "f"];
 function App() {
   const onDragEnd = () => {};
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div>
-        <Droppable droppableId="one">
-          {(magic, snapshot) => (
-            <ul ref={magic.innerRef} {...magic.droppableProps}>
-              <Draggable draggableId="first" index={0}>
-                {(magic) => (
-                  <li
-                    ref={magic.innerRef}
-                    {...magic.draggableProps}
-                    !이걸넣는부분만 터치해서움직일수있다
-                    {...magic.dragHandleProps}
-                  >
-                    hello
-                  </li>
-                )}
-              </Draggable>
-            </ul>
-          )}
-        </Droppable>
-      </div>
+      <Wrapper>
+        <Boards>
+          <Droppable droppableId="one">
+            {(magic) => (
+              <Board ref={magic.innerRef} {...magic.droppableProps}>
+                {toDos.map((toDo, index) => (
+                  <Draggable draggableId={toDo} index={index}>
+                    {(magic) => (
+                      <Card
+                        ref={magic.innerRef}
+                        {...magic.draggableProps}
+                        !이걸넣는부분만 터치해서움직일수있다
+                        {...magic.dragHandleProps}
+                      >
+                        {toDo}
+                      </Card>
+                    )}
+                  </Draggable>
+                ))}
+                {magic.placeholder}
+              </Board>
+            )}
+          </Droppable>
+        </Boards>
+      </Wrapper>
     </DragDropContext>
   );
 }
 export default App;
+
 -->
 
 <!-- & 아래는 리액트 훅, 리액트 설명
