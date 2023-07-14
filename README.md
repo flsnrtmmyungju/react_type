@@ -1,6 +1,24 @@
-<!--* 추가 설치 + 리액트 라우터돔 5.3버전사용
+<!-- ^ 여러줄 컬러입히려면 첫번째 칸의 기호를 한킨띄워야함 
+<!--* (xxxxxxxxxxxxxxx)
+  *
+  -->
+<!-- * (oooooooooooo)여기 *앞에 한칸 띄우삼
+  * 
+  -->
+
+
+<!-- * 추가 설치 + 리액트 라우터돔 5.3버전사용 
+
 * npm i react-router-dom@5.3
 * npm i react-query@3.39.3
+
+* react-query 설치 변경사항 아직적용은안함
+  react-query 공식문서 참조
+  npm i @tanstack/react-query --save --legacy-peer-deps
+  import {} from '@tanstack/react-query'
+  const { data, isLoading } = useQuery([“queryKey”], queryFunction);
+
+
 * npm i @types/react-router-dom
 * npm i apexcharts@3.41.0
 * npm i react-apexcharts@1.4.0
@@ -8,7 +26,9 @@
 * react-helmet-async react-helmet @types/react-helmet
 * recoil
 * react-hook-form
+
 -->
+
 
 <!-- ^ 스타일컴포넌트 사용법
 *프롭받는 예시
@@ -201,8 +221,6 @@ const playerDirection = Direction.Up;
 
  -->
 
--->
-
 <!-- ^ 아래는 리액트 훅
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
@@ -284,6 +302,9 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 <!-- ^ 아래는 리액트 상태관리 Recoil 사용하는법
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
 <!-- ^ recoil 기본 설치법
 인덱스에서
 import { RecoilRoot } from 'recoil';
@@ -463,7 +484,6 @@ function ToDoList() {
   );
 }
  -->
-
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
@@ -651,14 +671,7 @@ const {register,
   </form>
 -->
 
-react-query 설치 변경사항
-react-query 공식문서 참조
-npm i @tanstack/react-query --save --legacy-peer-deps
-import {} from '@tanstack/react-query'
-const { data, isLoading } = useQuery([“queryKey”], queryFunction);
-
-다크모드
-다크모드는 recoil과 ThemeProvider로 구현할 수 있습니다. 방식은 아래와 같습니다.
+<!--^ CandleStick CandleStick으로 나타내는법 
 
 CandleStick
 Chart를 CandleStick으로 나타내기 위해선, data에 두 가지 인수(x,y)를 전달해줘야 합니다. x는 x축의 이름, y는 [open, high, low, close]가 순서대로 담긴 배열입니다.
@@ -691,40 +704,52 @@ Chart를 CandleStick으로 나타내기 위해선, data에 두 가지 인수(x,y
   Coin의 데이터를 fetch 할 땐, react-query를 사용합니다. queryFunction 자리에는 fetch를 사용하는 promise 함수가 들어갑니다.
   react-query 공식문서 참조
   ApexChart - CandleStick Chart
+-->
 
-22년 5월17일자까지 잘 동작하는 4.15까지 완성된 github 소스
-https://github.com/skyiwalker/nomad-coders-reactmaster-crypto-tracker/commit/9da0a2cc3c8819cc3b98a283ad24ac71fb51c30a
+<!--*팁 -->
 
-<!--*팁
-()()이렇게하면 함수 바로실행
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
+<!--^1 스트링앞에 +붙이면 넘버로 바뀜
+  let a = "1"
+  console.log('a',a) STRING
+  console.log('a',+a) NUMBER
+-->
+
+<!--^2 ()()이렇게하면 함수 바로실행 -->
+
+<!--^3  ?이용해서 undefined 에러제외
 exdata.data 이렇게하면 exdata가없거나 undefined면 에러
 exdata?.data 이렇게하면 있을때만 실행
 한단계 더 도 가능 exdata?.data?.name 
-
-
-<!--*함수바로 변수에 할당 사용과 콜백으로 사용방법차이  
-const getcategory = (value:any) => {
-  return value+"done"
-}
-const someFunction = (value:any) => {
-                                        <!--!함수를 반환시키려면 value() 중요!! -->
-  console.log('someFunctionsomeFunction',value())
-}
-
-// getcategory(value) - 함수 호출
-const result2 = getcategory('result'); // 함수 호출하여 반환값을 result 변수에 할당
-console.log('result2', result2) //결과 : result2 resultdone
-
-  
-// () => getcategory(value) - 함수 반환
-const callback2 = () => getcategory('callback');// 콜백 함수로 사용하기 위해 함수 자체를 반환
-console.log('callback2', callback2) //결과 : callback2 () => getcategory('callback')
-someFunction(callback2);// 콜백 함수로 사용하여 someFunction 호출 
-                         //결과 : someFunctionsomeFunction callbackdone
 -->
 
-<!--* slice와 ... 이용하여 원소위치바꾸지않고 어레이 바꾸는방법
+<!--^4 함수바로 변수에 할당 사용과 콜백으로 사용방법차이 
+    const getcategory = (value:any) => {
+      return value+"done"
+    }
+    const someFunction = (value:any) => {
+                                        !함수를 반환시키려면 value() 중요!!
+      console.log('someFunctionsomeFunction',value())
+    }
+ !함수 호출
+ getcategory(value) 
+ !함수 호출하여 반환값을 result 변수에 할당
+const result2 = getcategory('result'); 
+console.log('result2', result2) //결과 : result2 resultdone
+
+  !함수 반환
+ () => getcategory(value) 
+  !콜백 함수로 사용하기 위해 함수 자체를 반환
+const callback2 = () => getcategory('callback');
+console.log('callback2', callback2) 
+  ~결과 : callback2 () => getcategory('callback')
+ !콜백 함수로 사용하여 someFunction 호출 
+someFunction(callback2);
+  ~결과 : someFunctionsomeFunction callbackdone
+-->
+ -->
+<!--^5 slice와 ... 이용하여 원소위치바꾸지않고 어레이 바꾸는방법
  setToDos(oldToDos =>{
       const tagetIndex = oldToDos.findIndex(toDo =>toDo.id=== id )
       const oldToDo = oldToDos[tagetIndex]
@@ -732,4 +757,7 @@ someFunction(callback2);// 콜백 함수로 사용하여 someFunction 호출
       return [...oldToDos.slice(0,tagetIndex),newToDo,...oldToDos.slice(tagetIndex+1)]
 })
 -->
--->
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+
