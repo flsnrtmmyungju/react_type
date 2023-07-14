@@ -1,4 +1,9 @@
-import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { toDoState } from "./atoms";
@@ -36,8 +41,14 @@ const Card = styled.div`
 
 function App() {
   const [toDos, setTodos] = useRecoilState(toDoState);
-  const onDragEnd = ({ destination, source }: DropResult) => {
-    console.log("end", destination, source);
+  const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
+    if (!destination) return;
+    setTodos((oldTodos) => {
+      const copyToDos = [...oldTodos];
+      copyToDos.splice(source?.index, 1);
+      copyToDos.splice(destination?.index, 0, draggableId);
+      return copyToDos;
+    });
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -47,7 +58,8 @@ function App() {
             {(magic) => (
               <Board ref={magic.innerRef} {...magic.droppableProps}>
                 {toDos.map((toDo, index) => (
-                  <Draggable key={index} draggableId={toDo} index={index}>
+                  //key와 draggableId가 같아야함
+                  <Draggable key={toDo} draggableId={toDo} index={index}>
                     {(magic) => (
                       <Card
                         ref={magic.innerRef}
