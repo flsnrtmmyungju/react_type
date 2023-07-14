@@ -9,23 +9,37 @@
 <!-- * 추가 설치 + 리액트 라우터돔 5.3버전사용
 
 * npm i react-router-dom@5.3
-* npm i react-query@3.39.3
-
-* react-query 설치 변경사항 아직적용은안함
-  react-query 공식문서 참조
-  npm i @tanstack/react-query --save --legacy-peer-deps
-  import {} from '@tanstack/react-query'
-  const { data, isLoading } = useQuery([“queryKey”], queryFunction);
-
-
 * npm i @types/react-router-dom
+
+* npm i react-query@3.39.3
+  ? react-query 설치 변경사항 아직적용은안함
+  ! react-query 공식문서 참조
+  ! npm i @tanstack/react-query --save --legacy-peer-deps
+  ! import {} from '@tanstack/react-query'
+  ! const { data, isLoading } = useQuery([“queryKey”], queryFunction);
+
+!차트라이브러리
 * npm i apexcharts@3.41.0
 * npm i react-apexcharts@1.4.0
+
 * gh-pages//없어도됨
+
+!페이지이름 정하는것
 * react-helmet-async react-helmet @types/react-helmet
+
+!상태관리 redux같은거.recoil이 더가볍고 빠름
 * recoil
+
+!form을 처리하는걸 도와줌
 * react-hook-form
 
+!드래그 엔 드랍 라이브러리
+*npm i react-beautiful-dnd
+*npm i --save-dev @types/react-beautiful-dnd
+    react-beautiful-dnd 테스트해 보기
+    https://react-beautiful-dnd.netlify.app/iframe.html?id=board--simple
+    react-beautiful-dnd 예시 코드
+    https://codesandbox.io/s/k260nyxq9v
 -->
 
 <!-- ^ 스타일컴포넌트 사용법
@@ -219,9 +233,40 @@ const playerDirection = Direction.Up;
 
  -->
 
-<!-- ^ 아래는 리액트 훅
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+<!-- ^ react-beautiful-dnd (드래그앤드랍)사용법
+! DragDropContext : 드래그앤드롭 가능하게 하고자 하는 영역 ex/전체틀
+! Droppable : 무언가를 드래그 앤 드롭 할수있는 영역 ex/리스트1,2
+! Draggable : Droppable 안에서 드래그 하는 영역  ex/리스트안의 컴포넌트 1,2,3,4,5....
+*기본 셋팅
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+function App() {
+  const onDragEnd = () => {};
+  return (
+    <>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div>
+          <Droppable droppableId="one">
+            {() => (
+              <ul>
+                <Draggable draggableId="first" index={0}>
+                  {() => <li>hello</li>}
+                </Draggable>
+                <Draggable draggableId="second" index={1}>
+                  {() => <li>bye</li>}
+                </Draggable>
+              </ul>
+            )}
+          </Droppable>
+        </div>
+      </DragDropContext>
+    </>
+  );
+}
 
+-->
+
+<!-- & 아래는 리액트 훅
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 <!-- ^ useState 사용법 (변수,변수실행시킬 함수 생성및설정)
 &기본 useState 사용법
 *          변수,   변수실행시킬 함수       1로 디폴트스테이트설정,타입설정(안해도됨혹시 두타입사용하고싶을경우.)
@@ -298,11 +343,8 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
-<!-- ^ 아래는 리액트 상태관리 Recoil 사용하는법
+<!-- & 아래는 리액트 상태관리 Recoil 사용하는법
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-
-<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-
 <!-- ^ recoil 기본 설치법
 인덱스에서
 import { RecoilRoot } from 'recoil';
@@ -779,8 +821,6 @@ console.log('callback2', callback2)
  !콜백 함수로 사용하여 someFunction 호출
 someFunction(callback2);
   ~결과 : someFunctionsomeFunction callbackdone
--->
-
 -->
 
 <!--^5 slice와 ... 이용하여 원소위치바꾸지않고 어레이 바꾸는방법
