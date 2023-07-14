@@ -308,6 +308,10 @@ export default App;
 
 <!-- & 아래는 리액트 훅, 리액트 설명
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+<!-- ^ React.memo() props가 변하지않았으면 리렌더링하지마라
+사용법
+export default React.memo(DragabbleCard);
+ -->
 
 <!-- ^ index 파일의   <React.StrictMode> 설명
  React.StrictMode는 React의 애플리케이션 개발 과정에서 잠재적인 문제를 식별하고
