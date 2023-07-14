@@ -91,6 +91,7 @@ function Circle({ bgColor }: CircleProps) {
   return <Container bgColor={bgColor} />;
 }
 
+
 &디폴트 값넣기
 ? ex//text
 * interface 로 아래지정
@@ -160,6 +161,44 @@ const onClick= (newCategory : "a" | "b" | "c" )
 위와 같음 (IToDO인터페이스에 category의 이름이 a,b,c라는 같은이름이 있을때 가능 )
 const onClick= (newCategory : IToDO["category"] )
 
+<!-- ^ Enum 사용법!
+ *정의 열거형(enumeration)이라고도 불리며, 명명된 상수 그룹을 정의하는 데 사용됩니다.
+ javascript에서는 
+ const Direction = {
+  Up: 'UP',
+  Down: 'DOWN',
+  Left: 'LEFT',
+  Right: 'RIGHT',
+};
+const playerDirection = Direction.Up;
+
+이렇게사용하는걸 
+type 에서는 
+enum Direction {
+  ^1.
+  !당연히 이름 같으면 {"UP","DOWN","LEFT","RIGHT"} 이렇게만 적어줘도됨
+  !근데 셀렉트경우 이렇게적으면 STRING가아니라 0,1,2이렇게 숫자로나와서
+  !아래처럼 적는게 좋을듯. 
+  ^2.
+  !아니면 사용하는곳에서 {Direction.Up+""}이렇게 사용하고고
+  !데이터베이스에서는 0,1,2로 받도록 사용도 가능
+  Up = "UP",
+  Down = "DOWN",
+  Left = "LEFT",
+  Right = "RIGHT",
+  ^3
+  !아니면 아래처럼도 가능
+  ! "Up" = "UP",
+  !"Down" = "DOWN",
+  !"Left" = "LEFT",
+  !"Right" = "RIGHT",
+}
+const playerDirection = Direction.Up;
+
+이런느낌
+
+
+ -->
 
 -->
 
@@ -332,15 +371,18 @@ import { IToDo, toDoState } from "../atoms";
 * atoms.tsx에서
 import { atom, selector } from "recoil";
 
+export enum Categories {"TO_DO","DOING","DONE",}
+
+
 export interface IToDo {
   text: string;
   id: number;
-  category: "TO_DO" | "DOING" | "DONE";
+  category: Categories;
 }
 
-export const categoryState = atom({
+export const categoryState = atom<Categories>({
   key: "category",
-  default: "TO_DO",
+  default:Categories.TO_DO,
 });
 
 export const toDoState = atom<IToDo[]>({
@@ -399,16 +441,18 @@ function ToDoList() {
   const toDos = useRecoilValue(toDoSelector);
   const [category, setCategory] = useRecoilState(categoryState);
   const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
-    setCategory(event.currentTarget.value);
+    !우리가 정한 타입은 <categories> 이지만 (만든거)
+    !option의 value는 typescript가보기에 그냥 string라서 에러남. as any추가
+    setCategory(event.currentTarget.value as any);
   };
   return (
     <>
       <h1>To Dos</h1>
       <hr />
       <select value={category} onInput={onInput}>
-        <option value="TO_DO">To Do</option>
-        <option value="DOING">Doing</option>
-        <option value="DONE">Done</option>
+         <option value={Categories.TO_DO}>To Do</option>
+        <option value={Categories.DOING}>Doing</option>
+        <option value={Categories.DONE}>Done</option>
       </select>
       <CreateToDo />
       {toDos?.map((toDo) => (
