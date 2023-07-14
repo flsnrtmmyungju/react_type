@@ -1,13 +1,12 @@
-<!-- ^ 여러줄 컬러입히려면 첫번째 칸의 기호를 한킨띄워야함 
+<!-- ^ 여러줄 컬러입히려면 첫번째 칸의 기호를 한킨띄워야함
 <!--* (xxxxxxxxxxxxxxx)
   *
   -->
 <!-- * (oooooooooooo)여기 *앞에 한칸 띄우삼
-  * 
+  *
   -->
 
-
-<!-- * 추가 설치 + 리액트 라우터돔 5.3버전사용 
+<!-- * 추가 설치 + 리액트 라우터돔 5.3버전사용
 
 * npm i react-router-dom@5.3
 * npm i react-query@3.39.3
@@ -28,7 +27,6 @@
 * react-hook-form
 
 -->
-
 
 <!-- ^ 스타일컴포넌트 사용법
 *프롭받는 예시
@@ -184,7 +182,7 @@ const onClick= (newCategory : IToDO["category"] )
 <!-- ^ Enum 사용법!
  *정의 열거형(enumeration)이라고도 불리며, 명명된 상수 그룹을 정의하는 데 사용됩니다.
  * 기본적으로는 숫자로 생성됨 {"a","b","c"} 이면 실제로 데이터가져가서 사용하면 0,1,2
- javascript에서는 
+ javascript에서는
  const Direction = {
   Up: 'UP',
   Down: 'DOWN',
@@ -193,13 +191,13 @@ const onClick= (newCategory : IToDO["category"] )
 };
 const playerDirection = Direction.Up;
 
-이렇게사용하는걸 
-type 에서는 
+이렇게사용하는걸
+type 에서는
 enum Direction {
   ^1.
   !당연히 이름 같으면 {"UP","DOWN","LEFT","RIGHT"} 이렇게만 적어줘도됨
   !근데 셀렉트경우 이렇게적으면 STRING가아니라 0,1,2이렇게 숫자로나와서
-  !아래처럼 적는게 좋을듯. 
+  !아래처럼 적는게 좋을듯.
   ^2.
   !아니면 사용하는곳에서 {Direction.Up+""}이렇게 사용하고고
   !데이터베이스에서는 0,1,2로 받도록 사용도 가능
@@ -372,12 +370,17 @@ import { IToDo, toDoState } from "../atoms";
         <button name="DOING" onClick={onClick}>
           Doing
         </button>
-      )} 
+      )}
     </li>
   );
 -->
 
 <!-- ^ useRecoilState(리코일 벨류 가져오고 수정 한번에할수있음) 사용법
+  *a는 atom의 value 거나 selector의 get함수의 리턴 값
+  *b는 atom의 value를 수정하는 함수거나 selector의 set property를 실행시키는 함수
+  *c는 atom or selector
+   const [a, b] = useRecoilState(c);
+
   리엑트 useState 와 사용법이 같다.
   const [toDos, setToDos] = useRecoilState(toDoState);
   setToDos((oldToDos) => [
@@ -390,6 +393,7 @@ import { IToDo, toDoState } from "../atoms";
 <!-- ^ selector(atom(어레이라고 생각)의 output을 변형시키는 도구)
 *key은 필수, get or set 가져야한다. {get}은 get사용하는 방법
 
+&get사용예시 ----------------------------------------------
 * atoms.tsx에서
 import { atom, selector } from "recoil";
 
@@ -439,22 +443,6 @@ function ToDoList() {
            !props 타입이 같고 값이 정해져 있으니까 {...toDo}이런식으로 한번에 사용가능
           <ToDo key={toDo.id} {...toDo} />
         ))}
-      </ul>
-      <hr />
-      <h1>Doing</h1>
-      <ul>
-        {doing.map((toDo) => (
-          <ToDo key={toDo.id} {...toDo} />
-        ))}
-      </ul>
-      <hr />
-      <h1>Done</h1>
-      <ul>
-        {done.map((toDo) => (
-          <ToDo key={toDo.id} {...toDo} />
-        ))}
-      </ul>
-      <hr />
     </div>
   );
 }
@@ -482,6 +470,50 @@ function ToDoList() {
       ))}
     </>
   );
+}
+&set사용예시 ----------------------------------------------
+*atoms.tsx
+import { atom, selector } from "recoil";
+export const minuteState = atom({
+  key: "minutes",
+  default: 0,
+});
+export const hourSelector = selector<number>({
+  key: "hours",
+  get: ({ get }) => {
+    const minutes = get(minuteState);
+    return minutes / 60;
+  },
+  set: ({ set }, newValue) => {
+    const minutes = Number(newValue) * 60;
+    set(minuteState, minutes);
+  },
+});
+*app.tsx
+const [minutes, setMinutes] = useRecoilState(minuteState);
+const [hours, setHours] = useRecoilState(hourSelector);
+const onMinutesChange = (event: React.FormEvent<HTMLInputElement>) => {
+  setMinutes(+event.currentTarget.value);
+};
+const onHoursChange = (event: React.FormEvent<HTMLInputElement>) => {
+  setHours(+event.currentTarget.value);
+};
+return (
+  <>
+    <input
+      value={minutes}
+      onChange={onMinutesChange}
+      type="number"
+      placeholder="Minutes"
+    />
+    <input
+      value={hours}
+      onChange={onHoursChange}
+      type="number"
+      placeholder="Hours"
+    />
+  </>
+);
 }
  -->
 
@@ -671,7 +703,7 @@ const {register,
   </form>
 -->
 
-<!--^ CandleStick CandleStick으로 나타내는법 
+<!--^ CandleStick CandleStick으로 나타내는법
 
 CandleStick
 Chart를 CandleStick으로 나타내기 위해선, data에 두 가지 인수(x,y)를 전달해줘야 합니다. x는 x축의 이름, y는 [open, high, low, close]가 순서대로 담긴 배열입니다.
@@ -721,10 +753,10 @@ Chart를 CandleStick으로 나타내기 위해선, data에 두 가지 인수(x,y
 <!--^3  ?이용해서 undefined 에러제외
 exdata.data 이렇게하면 exdata가없거나 undefined면 에러
 exdata?.data 이렇게하면 있을때만 실행
-한단계 더 도 가능 exdata?.data?.name 
+한단계 더 도 가능 exdata?.data?.name
 -->
 
-<!--^4 함수바로 변수에 할당 사용과 콜백으로 사용방법차이 
+<!--^4 함수바로 변수에 할당 사용과 콜백으로 사용방법차이
     const getcategory = (value:any) => {
       return value+"done"
     }
@@ -733,22 +765,24 @@ exdata?.data 이렇게하면 있을때만 실행
       console.log('someFunctionsomeFunction',value())
     }
  !함수 호출
- getcategory(value) 
+ getcategory(value)
  !함수 호출하여 반환값을 result 변수에 할당
-const result2 = getcategory('result'); 
+const result2 = getcategory('result');
 console.log('result2', result2) //결과 : result2 resultdone
 
   !함수 반환
- () => getcategory(value) 
+ () => getcategory(value)
   !콜백 함수로 사용하기 위해 함수 자체를 반환
 const callback2 = () => getcategory('callback');
-console.log('callback2', callback2) 
+console.log('callback2', callback2)
   ~결과 : callback2 () => getcategory('callback')
- !콜백 함수로 사용하여 someFunction 호출 
+ !콜백 함수로 사용하여 someFunction 호출
 someFunction(callback2);
   ~결과 : someFunctionsomeFunction callbackdone
 -->
- -->
+
+-->
+
 <!--^5 slice와 ... 이용하여 원소위치바꾸지않고 어레이 바꾸는방법
  setToDos(oldToDos =>{
       const tagetIndex = oldToDos.findIndex(toDo =>toDo.id=== id )
@@ -759,5 +793,3 @@ someFunction(callback2);
 -->
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-
-
