@@ -645,6 +645,10 @@ return (
 & const { currentTarget: {value, tagName, width, id} } = event;
 -->
 
+<!-- ^ key값에 변수를 넣으려면 대괄호 필요 ES6: Computed property name
+  [source.droppableId]: boardCopy,
+ -->
+
 <!-- ^ Form 사용법
 import React, { useState } from "react";
 function App() {
@@ -852,21 +856,21 @@ Chart를 CandleStick으로 나타내기 위해선, data에 두 가지 인수(x,y
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
-<!--^1 스트링앞에 +붙이면 넘버로 바뀜
+<!--^ 스트링앞에 +붙이면 넘버로 바뀜
   let a = "1"
   console.log('a',a) STRING
   console.log('a',+a) NUMBER
 -->
 
-<!--^2 ()()이렇게하면 함수 바로실행 -->
+<!--^ ()()이렇게하면 함수 바로실행 -->
 
-<!--^3  ?이용해서 undefined 에러제외
+<!--^  ?이용해서 undefined 에러제외
 exdata.data 이렇게하면 exdata가없거나 undefined면 에러
 exdata?.data 이렇게하면 있을때만 실행
 한단계 더 도 가능 exdata?.data?.name
 -->
 
-<!--^4 함수바로 변수에 할당 사용과 콜백으로 사용방법차이
+<!--^ 함수바로 변수에 할당 사용과 콜백으로 사용방법차이
     const getcategory = (value:any) => {
       return value+"done"
     }
@@ -891,7 +895,7 @@ someFunction(callback2);
   ~결과 : someFunctionsomeFunction callbackdone
 -->
 
-<!--^5 slice와 ... 이용하여 원소위치바꾸지않고 어레이 바꾸는방법
+<!--^ slice와 ... 이용하여 원소위치바꾸지않고 어레이 바꾸는방법
  setToDos(oldToDos =>{
       const tagetIndex = oldToDos.findIndex(toDo =>toDo.id=== id )
       const oldToDo = oldToDos[tagetIndex]
@@ -899,5 +903,18 @@ someFunction(callback2);
       return [...oldToDos.slice(0,tagetIndex),newToDo,...oldToDos.slice(tagetIndex+1)]
 })
 -->
+
+<!-- ^ 배열 값복사해서 기존 배열 값 수정하는 방법
+   const boardCopy = [...allboard[source.droppableId]];
+        boardCopy.splice(source?.index, 1);
+        boardCopy.splice(destination?.index, 0, draggableId);
+     !아래코드는 allboard값을 다 가져오고 수정된값을 추가하지만
+    !객체 안에서 키 값이 중복된 프로퍼티는 마지막에 선언된 프로퍼티를 사용해서 갠춘.
+        return {
+          ...allboard,
+          ! ES6: Computed property name
+          ! key값에 변수값을 넣으려면 대괄호[]필요
+          [source.droppableId]: boardCopy,
+  -->
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
