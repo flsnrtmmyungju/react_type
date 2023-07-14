@@ -1,12 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { RecoilRoot } from 'recoil';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { RecoilRoot } from "recoil";
+import App from "./App";
 import { createGlobalStyle } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
-import { ThemeProvider } from 'styled-components';
-import { darkTheme } from './theme';
-
+import { ThemeProvider } from "styled-components";
+import { darkTheme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -74,18 +73,20 @@ a {
 }
 `;
 
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-root.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <ThemeProvider theme={darkTheme}>
-          <HelmetProvider>
-             <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet"/>
-          </HelmetProvider>
-          <GlobalStyle />
-          <App />
-      </ThemeProvider>
-    </RecoilRoot>
-  </React.StrictMode>
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
 );
-
+root.render(
+  <RecoilRoot>
+    <ThemeProvider theme={darkTheme}>
+      <HelmetProvider>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap"
+          rel="stylesheet"
+        />
+      </HelmetProvider>
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
+  </RecoilRoot>
+);

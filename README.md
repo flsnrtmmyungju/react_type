@@ -36,6 +36,7 @@
 !드래그 엔 드랍 라이브러리
 *npm i react-beautiful-dnd
 *npm i --save-dev @types/react-beautiful-dnd
+*index에 <React.StrictMode>지원안되서 지워야함
     react-beautiful-dnd 테스트해 보기
     https://react-beautiful-dnd.netlify.app/iframe.html?id=board--simple
     react-beautiful-dnd 예시 코드
@@ -238,35 +239,48 @@ const playerDirection = Direction.Up;
 ! Droppable : 무언가를 드래그 앤 드롭 할수있는 영역 ex/리스트1,2
 ! Draggable : Droppable 안에서 드래그 하는 영역  ex/리스트안의 컴포넌트 1,2,3,4,5....
 *기본 셋팅
+import React from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 function App() {
   const onDragEnd = () => {};
   return (
-    <>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div>
-          <Droppable droppableId="one">
-            {() => (
-              <ul>
-                <Draggable draggableId="first" index={0}>
-                  {() => <li>hello</li>}
-                </Draggable>
-                <Draggable draggableId="second" index={1}>
-                  {() => <li>bye</li>}
-                </Draggable>
-              </ul>
-            )}
-          </Droppable>
-        </div>
-      </DragDropContext>
-    </>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div>
+        <Droppable droppableId="one">
+          {(magic, snapshot) => (
+            <ul ref={magic.innerRef} {...magic.droppableProps}>
+              <Draggable draggableId="first" index={0}>
+                {(magic) => (
+                  <li
+                    ref={magic.innerRef}
+                    {...magic.draggableProps}
+                    !이걸넣는부분만 터치해서움직일수있다
+                    {...magic.dragHandleProps}
+                  >
+                    hello
+                  </li>
+                )}
+              </Draggable>
+            </ul>
+          )}
+        </Droppable>
+      </div>
+    </DragDropContext>
   );
 }
-
+export default App;
 -->
 
-<!-- & 아래는 리액트 훅
+<!-- & 아래는 리액트 훅, 리액트 설명
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+<!-- ^ index 파일의   <React.StrictMode> 설명
+ React.StrictMode는 React의 애플리케이션 개발 과정에서 잠재적인 문제를 식별하고
+ 경고를 표시하여 개발자에게 도움을 줍니다.
+ 그래서 콘솔창에 콘솔두번찍힘 두번검사.
+-->
+
 <!-- ^ useState 사용법 (변수,변수실행시킬 함수 생성및설정)
 &기본 useState 사용법
 *          변수,   변수실행시킬 함수       1로 디폴트스테이트설정,타입설정(안해도됨혹시 두타입사용하고싶을경우.)
