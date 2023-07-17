@@ -442,6 +442,19 @@ const Box = styled(motion.div)`
   border-radius: 10px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `;
+const myVars = {
+  start: { scale: 0 },
+                                              !spring이기본타입
+  end: { scale: 1, rotateZ: 360, transition: { type: "spring", delay: 0.5 } },
+};
+function App() {
+  return (
+    <Wrapper>
+                              !{myVars.start}이렇게써도됨
+      <Box variants={myVars} initial="start" animate="end" />
+    </Wrapper>
+  );
+}
  -->
 
 <!-- ^CRACO (리엑트 라이브러리사용해서 기본 설정덮어씌우기)
