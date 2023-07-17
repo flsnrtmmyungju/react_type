@@ -409,8 +409,22 @@ import { ReactQueryDevtools } from "react-query/devtools";
 <ReactQueryDevtools initialIsOpen={true} />
  -->
 
-<!-- ^useRef() 
-
+<!-- ^useRef(일반html요소에 접근가능)
+함수형 컴포넌트에서 돔 요소에 접근하는 방법을 제공합니다. useRef를 사용하면 원하는 돔 요소에 대한 참조를 만들 수 있습니다.
+예를 들어, useRef를 사용하여 특정 input 요소에 접근하고 싶다면, 다음과 같이 코드를 작성할 수 있습니다:
+function MyComponent() {
+*  useRef훅은 input 요소에 대한 참조를 생성
+  const inputRef = useRef();
+  const handleClick = () => {
+    inputRef.current.focus();
+  };
+  return (
+    <div>
+      <input ref={inputRef} type="text" />
+      <button onClick={handleClick}>Focus Input</button>
+    </div>
+  );
+}
 -->
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->

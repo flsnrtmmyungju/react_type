@@ -24,12 +24,14 @@ function App() {
   const [toDos, setTodos] = useRecoilState(toDoState);
   const onDragEnd = (info: DropResult) => {
     const { destination, draggableId, source } = info;
+    console.log(info);
     if (!destination) return;
     if (destination.droppableId === source.droppableId) {
       setTodos((allboard) => {
         const boardCopy = [...allboard[source.droppableId]];
+        const taskObj = boardCopy[source.index];
         boardCopy.splice(source.index, 1);
-        boardCopy.splice(destination.index, 0, draggableId);
+        boardCopy.splice(destination.index, 0, taskObj);
         //아래코드는 allboard값을 다 가져오고 수정된값을 추가하지만
         //객체 안에서 키 값이 중복된 프로퍼티는 마지막에 선언된 프로퍼티를 사용해서 갠춘.
         return {
@@ -43,9 +45,10 @@ function App() {
     if (destination?.droppableId !== source.droppableId) {
       setTodos((allboard) => {
         const sourceBoard = [...allboard[source.droppableId]];
+        const taskObj = sourceBoard[source.index];
         const destinationBoard = [...allboard[destination.droppableId]];
         sourceBoard.splice(source.index, 1);
-        destinationBoard.splice(destination.index, 0, draggableId);
+        destinationBoard.splice(destination.index, 0, taskObj);
         return {
           ...allboard,
           [source.droppableId]: sourceBoard,
