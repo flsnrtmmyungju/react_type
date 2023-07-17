@@ -41,6 +41,13 @@
     https://react-beautiful-dnd.netlify.app/iframe.html?id=board--simple
     react-beautiful-dnd 예시 코드
     https://codesandbox.io/s/k260nyxq9v
+
+!framer-motion animation넣는거
+npm i framer-motion
+
+^사용안했음
+!craco(react-scripts를 덮어쓰기 하는 거:리엑트의설정바꿀수있음)
+* npm i @craco/craco@6.4.0 --save
 -->
 
 <!-- ^ 스타일컴포넌트 사용법
@@ -426,6 +433,43 @@ function MyComponent() {
   );
 }
 -->
+
+<!-- ^ framer-motion(리엑트 애니메이션 객체만들기)
+const Box = styled(motion.div)`
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+`;
+ -->
+
+<!-- ^CRACO (리엑트 라이브러리사용해서 기본 설정덮어씌우기)
+* 이프로젝트에서는 사용안함
+CRACO(Create React App Configuration Override)는 create-react-app을 위한 쉽고 이해하기 쉬운 configuration 레이어입니다. 애플리케이션 root에 단일 configuration(예: craco.config.js) 파일을 추가하고 eslint, babel, postcss configuration 등을 사용자 지정하여 'eject'를 사용하지 않고 create-react-app 및 사용자 지정의 모든 이점을 얻으십시오.
+craco.config.js
+module.exports = {
+webpack: {
+configure: {
+module: {
+rules: [
+{
+type: 'javascript/auto',
+test: /\.mjs$/,
+include: /node_modules/,
+},],},},},}
+
+package.json
+"scripts": {
+  "start": "craco start",
+  "build": "craco build",
+  "test": "craco test",
+  "eject": "react-scripts eject",
+  "deploy": "gh-pages -d build",
+  "predeploy": "npm run build"
+},
+
+ -->
 
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
