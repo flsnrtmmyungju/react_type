@@ -40,7 +40,7 @@ footer, header, hgroup, main, menu, nav, section {
 body {
   font-weight: 300;
   font-family: 'Source Sans Pro', sans-serif;
-  background:linear-gradient(135deg,#e09,#d0e);
+  background-color:${(props) => props.theme.bgColor};
   color:black;
   line-height: 1.2;
 }
@@ -77,18 +77,16 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <ThemeProvider theme={darkTheme}>
-        <HelmetProvider>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap"
-            rel="stylesheet"
-          />
-        </HelmetProvider>
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
-    </RecoilRoot>
-  </React.StrictMode>
+  <RecoilRoot>
+    <ThemeProvider theme={darkTheme}>
+      <HelmetProvider>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap"
+          rel="stylesheet"
+        />
+      </HelmetProvider>
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
+  </RecoilRoot>
 );

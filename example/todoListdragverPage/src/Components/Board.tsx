@@ -62,6 +62,8 @@ function Board({ toDos, boardId }: IBoardProps) {
     setToDos((allBoards) => {
       return {
         ...allBoards,
+        //ex/"doing" : [newToDo, ...allBoards["doing"]]
+        //doing은 newToDo더하기 allboard의 Doing을 가지는 array가될거다.
         [boardId]: [newToDo, ...allBoards[boardId]],
       };
     });
