@@ -455,6 +455,43 @@ function App() {
     </Wrapper>
   );
 }
+
+*자식은 부모와 같은이름으로 사용하는 게있으면 따로안써도됨
+const boxVariants = {
+  start: {
+    opacity: 0,
+    scale: 0.5,
+  },
+  end: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      duration: 0.5,
+      bounce: 0.5,
+      !자식 딜레이주기
+      delayChildren: 0.5,
+      !자식들 순서대로 0.2씩효과줌
+      staggerChildren: 0.2,
+    },
+  },
+};
+const circleVariants = {
+  start: {
+    opacity: 0,
+    !밑에서위로 올라오게하려고 이만큼 밑으로 내려감
+    y: 10,
+  },
+  end: {
+    opacity: 1,
+    y: 0,
+  },
+};
+ !자식(Circle)도 initial="start" 이름같은걸로 설정했으니까 안써도됨
+<Box variants={boxVariants} initial="start" animate="end">
+  <Circle variants={circleVariants} />
+</Box>
+
  -->
 
 <!-- ^CRACO (리엑트 라이브러리사용해서 기본 설정덮어씌우기)
