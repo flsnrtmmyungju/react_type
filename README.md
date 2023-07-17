@@ -409,6 +409,10 @@ import { ReactQueryDevtools } from "react-query/devtools";
 <ReactQueryDevtools initialIsOpen={true} />
  -->
 
+<!-- ^useRef() 
+
+-->
+
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
 <!-- & 아래는 리액트 상태관리 Recoil 사용하는법
