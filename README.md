@@ -492,6 +492,8 @@ const circleVariants = {
   <Circle variants={circleVariants} />
 </Box>
 
+
+
  -->
 
 <!-- ^CRACO (리엑트 라이브러리사용해서 기본 설정덮어씌우기)
