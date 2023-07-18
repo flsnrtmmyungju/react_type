@@ -1,12 +1,5 @@
 import styled from "styled-components";
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  useScroll,
-  useMotionValueEvent,
-} from "framer-motion";
-import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
 const Wrapper = styled(motion.div)`
   height: 100vh;
