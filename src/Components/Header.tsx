@@ -1,26 +1,28 @@
-import styled from "styled-components";
-import { motion } from "framer-motion";
 import { Link, useRouteMatch } from "react-router-dom";
-import { useState } from "react";
+import styled from "styled-components";
+import {
+  motion,
+  useAnimation,
+  useMotionValueEvent,
+  useScroll,
+} from "framer-motion";
+import { useEffect, useState } from "react";
 
-const Nav = styled.nav`
+const Nav = styled(motion.nav)`
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: fixed;
   width: 100%;
   top: 0;
-  background-color: black;
   font-size: 14px;
   padding: 20px 60px;
   color: white;
 `;
-
 const Col = styled.div`
   display: flex;
   align-items: center;
 `;
-
 const Logo = styled(motion.svg)`
   margin-right: 50px;
   width: 95px;
@@ -31,25 +33,22 @@ const Logo = styled(motion.svg)`
     stroke: white;
   }
 `;
-
 const Items = styled.ul`
   display: flex;
   align-items: center;
 `;
-
 const Item = styled.li`
   margin-right: 20px;
   color: ${(props) => props.theme.white.darker};
   transition: color 0.3s ease-in-out;
   position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  flex-direction: column;
   &:hover {
     color: ${(props) => props.theme.white.lighter};
   }
 `;
-
 const Search = styled.span`
   color: white;
   display: flex;
@@ -59,7 +58,6 @@ const Search = styled.span`
     height: 25px;
   }
 `;
-
 const Circle = styled(motion.span)`
   position: absolute;
   width: 5px;
@@ -71,12 +69,18 @@ const Circle = styled(motion.span)`
   margin: 0 auto;
   background-color: ${(props) => props.theme.red};
 `;
-
 const Input = styled(motion.input)`
   /* 처음 변화가 시작되는곳 설정 */
   transform-origin: right center;
   position: absolute;
-  left: -175px;
+  right: 0px;
+  padding: 5px 10px;
+  padding-left: 30px;
+  z-index: -1;
+  color: white;
+  font-size: 16px;
+  background-color: transparent;
+  border: 1px solid ${(props) => props.theme.white.lighter};
 `;
 
 const logoVariants = {
@@ -85,11 +89,18 @@ const logoVariants = {
   },
   active: {
     fillOpacity: [0, 1, 0],
-    scale: [1, 1.1, 1],
-    // rotateX: [0, 360, 0],
     transition: {
       repeat: Infinity,
     },
+  },
+};
+
+const navVariants = {
+  top: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+  },
+  scroll: {
+    backgroundColor: "rgba(0, 0, 0, 1)",
   },
 };
 
@@ -97,14 +108,34 @@ function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const homeMatch = useRouteMatch("/");
   const tvMatch = useRouteMatch("/tv");
-  const toggleSearch = () => setSearchOpen((prev) => !prev);
+  // useAnimation사용하여 시작 및 중지 메서드가 있는 AnimationControls을 만들 수 있습니다.
+  const inputAnimation = useAnimation();
+  const navAnimation = useAnimation();
+  //주의! body 또는 html을 height: 100% 또는 이와 유사한 것으로 설정하면 페이지 길이를 정확하게 측정하는 브라우저의 기능이 손상되므로 Progress 값이 손상됩니다.
+  //scrollY:y위치알려줌,scrollYProgress:y의진행율을 0~1사이값으로 알려줌
+  const { scrollY, scrollYProgress } = useScroll();
+  const toggleSearch = () => {
+    if (searchOpen) {
+      inputAnimation.start({
+        scaleX: 0,
+      });
+    } else {
+      inputAnimation.start({ scaleX: 1 });
+    }
+    setSearchOpen((prev) => !prev);
+  };
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    console.log("latest", latest);
+    latest > 0.1 ? navAnimation.start("scroll") : navAnimation.start("top");
+  });
+
   return (
-    <Nav>
+    <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
         <Logo
           variants={logoVariants}
           whileHover="active"
-          initial="normal"
+          animate="normal"
           xmlns="http://www.w3.org/2000/svg"
           width="1024"
           height="276.742"
@@ -133,6 +164,7 @@ function Header() {
             onClick={toggleSearch}
             animate={{ x: searchOpen ? -205 : 0 }}
             //   아래의 input과 애니메이션 맞춤
+
             transition={{ type: "linear" }}
             fill="currentColor"
             viewBox="0 0 20 20"
@@ -145,7 +177,8 @@ function Header() {
             ></path>
           </motion.svg>
           <Input
-            animate={{ scaleX: searchOpen ? 1 : 0 }}
+            animate={inputAnimation}
+            initial={{ scaleX: 0 }}
             transition={{ type: "linear" }}
             placeholder="찾으실 영화나 TV프로그램을 적으세요."
           />
@@ -154,5 +187,4 @@ function Header() {
     </Nav>
   );
 }
-
 export default Header;
