@@ -57,7 +57,31 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
   background-position: center center;
   height: 200px;
   font-size: 66px;
+  //첫번째마지막은 화면바깥으로 나가니까 방향바꿈
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
 `;
+
+const boxVariants = {
+  normal: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.3,
+    y: -50,
+    //hover시에만 transition
+    transition: {
+      delay: 0.5, //시작전 시간
+      duaration: 0.3, //동작시간
+      //박스에도type: "tween", 적었지만 이건따로지정을했기떄문에 또적어야함
+      type: "tween",
+    },
+  },
+};
 
 const offset = 6;
 
@@ -113,7 +137,11 @@ function Home() {
                   .slice(offset * index, offset * index + offset)
                   .map((movie) => (
                     <Box
+                      variants={boxVariants}
+                      whileHover="hover"
+                      initial="nonal"
                       key={movie.id}
+                      transition={{ type: "tween" }}
                       bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
                     />
                   ))}
