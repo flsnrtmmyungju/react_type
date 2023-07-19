@@ -113,19 +113,13 @@ function Header() {
   const navAnimation = useAnimation();
   //주의! body 또는 html을 height: 100% 또는 이와 유사한 것으로 설정하면 페이지 길이를 정확하게 측정하는 브라우저의 기능이 손상되므로 Progress 값이 손상됩니다.
   //scrollY:y위치알려줌,scrollYProgress:y의진행율을 0~1사이값으로 알려줌
-  const { scrollY, scrollYProgress } = useScroll();
+  const { scrollYProgress } = useScroll();
   const toggleSearch = () => {
-    if (searchOpen) {
-      inputAnimation.start({
-        scaleX: 0,
-      });
-    } else {
-      inputAnimation.start({ scaleX: 1 });
-    }
+    if (searchOpen) inputAnimation.start({ scaleX: 0 });
+    else inputAnimation.start({ scaleX: 1 });
     setSearchOpen((prev) => !prev);
   };
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    console.log("latest", latest);
     latest > 0.1 ? navAnimation.start("scroll") : navAnimation.start("top");
   });
 
