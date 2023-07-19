@@ -39,12 +39,15 @@ footer, header, hgroup, main, menu, nav, section {
 *[hidden] {
     display: none;
 }
+
+
 body {
   font-weight: 300;
   font-family: 'Source Sans Pro', sans-serif;
   background:black;
   color:${(props) => props.theme.white.darker};
   line-height: 1.2;
+  overflow-x:hidden;
 }
 menu, ol, ul {
   list-style: none;
