@@ -61,5 +61,6 @@
   "@types/styled-components": "^5.1.26",
   "styled-components": "^6.0.2",
   "@types/react-router-dom": "^5.3.3"
-  }
+  },
+  "homepage": "https://flsnrtmmyungju.github.io/react_type.github.io/"
 }

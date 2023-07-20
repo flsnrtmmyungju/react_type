@@ -367,11 +367,12 @@ function MyComponent(props) {
   },[])
 -->
 
-<!--^ useRouteMatch 사용법 (맞는 라우터에 있는걸 확인해줌 *주소의 여러정보들어있음)
-const priceMatch = useRouteMatch("/:coinId/price");
+<!--^ useMatch(v6부터 useRouteMatch=>useMatch로 변경) 사용법 (맞는 라우터에 있는걸 확인해줌 *주소의 여러정보들어있음)
+v6부터 절대경로가 상대경로로 변경 "/a"=>"a"
+const priceMatch = useMatch(":coinId/price");
 <Tabs>
   <Tab isActive={priceMatch !== null}> //isActive는 임의의이름임 다른이름가능
-    <Link to={`/${coinId}/price`}>Price</Link>
+    <Link to={`${coinId}/price`}>Price</Link>
   </Tab>
 </Tabs>
 -->
