@@ -1,7 +1,9 @@
+import MaidRouter from "./Router";
 
 function App() {
   return (
     <>
+      <MaidRouter></MaidRouter>
     </>
   );
 }

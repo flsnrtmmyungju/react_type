@@ -9,7 +9,12 @@
 <!-- * 추가 설치 + 리액트 라우터돔 5.3버전사용
 
 * npm i react-router-dom
+!기존버전
+!"react-router-dom": "5.3",
+!바꾼버전
+!"react-router-dom": "^6.14.2",
 * npm i @types/react-router-dom
+!"@types/react-router-dom": "^5.3.3",
 
 * npm i react-query
   ? react-query 설치 변경사항 아직적용은안함
