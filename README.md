@@ -12,7 +12,7 @@
 !기존버전
 !"react-router-dom": "5.3",
 !바꾼버전
-!"react-router-dom": "^6.14.2",
+!"react-router-dom": "6.4",
 * npm i @types/react-router-dom
 !"@types/react-router-dom": "^5.3.3",
 
