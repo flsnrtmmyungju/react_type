@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useQuery } from "react-query";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { getMovies, IGetMoviesResult } from "../api";
 import useWindowDimensions from "../Components/useWidowDimensions";
@@ -65,19 +66,41 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
     transform-origin: center right;
   }
 `;
-
 const boxVariants = {
   normal: {
     scale: 1,
   },
   hover: {
     scale: 1.3,
-    y: -50,
+    y: -80,
     //hover시에만 transition
     transition: {
       delay: 0.5, //시작전 시간
-      duaration: 0.3, //동작시간
+      duaration: 0.1, //동작시간
       //박스에도type: "tween", 적었지만 이건따로지정을했기떄문에 또적어야함
+      type: "tween",
+    },
+  },
+};
+
+const Info = styled(motion.div)`
+  padding: 10px;
+  background-color: ${(props) => props.theme.black.lighter};
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  h4 {
+    text-align: center;
+    font-size: 18px;
+  }
+`;
+const infoVariants = {
+  hover: {
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+      duaration: 0.1,
       type: "tween",
     },
   },
@@ -86,6 +109,9 @@ const boxVariants = {
 const offset = 6;
 
 function Home() {
+  //window의 width값을 계속 추적 리사이즈를 위해 추가
+  const windowWidth = useWindowDimensions();
+  const history = useHistory();
   const { data, isLoading } = useQuery<IGetMoviesResult>(
     ["movies", "nowPlaying"],
     getMovies
@@ -103,9 +129,9 @@ function Home() {
     }
   };
   const toggleLeaving = () => setLeaving((prev) => !prev);
-  //window의 width값을 계속 추적 리사이즈를 위해 추가
-  const windowWidth = useWindowDimensions();
-
+  const onBoxClicked = (movieId: number) => {
+    history.push(`/movies/${movieId}`);
+  };
   return (
     <Wrapper>
       {isLoading ? (
@@ -137,13 +163,20 @@ function Home() {
                   .slice(offset * index, offset * index + offset)
                   .map((movie) => (
                     <Box
+                      onClick={() => onBoxClicked(movie.id)}
                       variants={boxVariants}
                       whileHover="hover"
                       initial="nonal"
                       key={movie.id}
                       transition={{ type: "tween" }}
                       bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
-                    />
+                    >
+                      {/* 여기에 <img>만들어서 버튼 만드는걸 추천 */}
+                      {/* 부모에게 variants가있으면 자동으로 whileHover같은거 상속됨  */}
+                      <Info variants={infoVariants}>
+                        <h4>{movie.title}</h4>
+                      </Info>
+                    </Box>
                   ))}
               </Row>
             </AnimatePresence>
