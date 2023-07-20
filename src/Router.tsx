@@ -4,6 +4,7 @@ import Root from "./Root";
 import About from "./screens/About";
 import Home from "./screens/Home";
 import NotFound from "./screens/NotFound";
+import User from "./screens/users/User";
 
 const router = createBrowserRouter([
   // 전체라우터의 컨테이너
@@ -22,6 +23,12 @@ const router = createBrowserRouter([
       {
         path: "about",
         element: <About />,
+      },
+      ///users 페이지에 뭔가있으면 path:"users"만들고
+      //children으로 path: ":userId"따로 만들어야함
+      {
+        path: "users/:userId",
+        element: <User />,
       },
     ],
     errorElement: <NotFound />,
