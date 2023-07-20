@@ -16,7 +16,8 @@ function App() {
           <Search />
         </Route>
         {/* 항상 /이걸로시작하니까 맨아래로 내려줌 */}
-        <Route path="/">
+        {/* 한페이지에서 두개의 url을 가짐 */}
+        <Route path={["/", "/movies/:movieID"]}>
           <Home />
         </Route>
       </Switch>
